@@ -33,5 +33,22 @@ class DeviceInfo(BaseModel):
         description="Firmware or software version of the recording device/app.",
     )
 
+    def __str__(self) -> str:
+        """Pretty print device information."""
+        parts = []
+        if self.device_name:
+            parts.append(f"Device: {self.device_name}")
+        if self.manufacturer:
+            parts.append(f"Manufacturer: {self.manufacturer}")
+        if self.product_id:
+            parts.append(f"Product ID: {self.product_id}")
+        if self.firmware_version:
+            parts.append(f"Firmware: {self.firmware_version}")
+
+        if not parts:
+            return "DeviceInfo(No device information available)"
+
+        return "DeviceInfo(\n  " + "\n  ".join(parts) + "\n)"
+
 
 __all__ = ["DeviceInfo"]

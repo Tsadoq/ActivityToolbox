@@ -88,5 +88,38 @@ class TrackPoint(BaseModel):
             raise ValueError("latitude and longitude must be both set or both None")
         return self
 
+    def __str__(self) -> str:
+        """Pretty print track point information."""
+        parts = [f"Time: {self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}"]
+
+        if self.latitude is not None and self.longitude is not None:
+            parts.append(f"GPS: ({self.latitude:.6f}, {self.longitude:.6f})")
+
+        if self.elevation is not None:
+            parts.append(f"Elevation: {self.elevation:.1f}m")
+
+        if self.distance is not None:
+            parts.append(f"Distance: {self.distance:.1f}m")
+
+        if self.speed is not None:
+            parts.append(f"Speed: {self.speed:.2f}m/s")
+
+        if self.heart_rate is not None:
+            parts.append(f"HR: {self.heart_rate}bpm")
+
+        if self.cadence is not None:
+            parts.append(f"Cadence: {self.cadence}rpm")
+
+        if self.power is not None:
+            parts.append(f"Power: {self.power}W")
+
+        if self.temperature is not None:
+            parts.append(f"Temp: {self.temperature}°C")
+
+        if self.extensions:
+            parts.append(f"Extensions: {len(self.extensions)} field(s)")
+
+        return "TrackPoint(\n  " + "\n  ".join(parts) + "\n)"
+
 
 __all__ = ["TrackPoint"]

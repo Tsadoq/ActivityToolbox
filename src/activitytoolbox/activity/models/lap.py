@@ -119,5 +119,78 @@ class Lap(BaseModel):
             return None
         return self.start_time + self.total_time
 
+    def __str__(self) -> str:
+        """Pretty print lap information."""
+        parts = []
+
+        if self.index is not None:
+            parts.append(f"Lap #{self.index + 1}")
+        else:
+            parts.append("Lap")
+
+        parts.append(f"Start: {self.start_time.strftime('%Y-%m-%d %H:%M:%S')}")
+
+        if self.total_time is not None:
+            total_secs = int(self.total_time.total_seconds())
+            hours, remainder = divmod(total_secs, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            if hours > 0:
+                parts.append(f"Duration: {hours}h {minutes}m {seconds}s")
+            elif minutes > 0:
+                parts.append(f"Duration: {minutes}m {seconds}s")
+            else:
+                parts.append(f"Duration: {seconds}s")
+
+        if self.total_distance is not None:
+            if self.total_distance >= 1000:
+                parts.append(f"Distance: {self.total_distance / 1000:.2f}km")
+            else:
+                parts.append(f"Distance: {self.total_distance:.1f}m")
+
+        if self.avg_speed is not None:
+            parts.append(
+                f"Avg Speed: {self.avg_speed:.2f}m/s ({self.avg_speed * 3.6:.1f}km/h)"
+            )
+
+        if self.max_speed is not None:
+            parts.append(
+                f"Max Speed: {self.max_speed:.2f}m/s ({self.max_speed * 3.6:.1f}km/h)"
+            )
+
+        if self.avg_heart_rate is not None:
+            parts.append(f"Avg HR: {self.avg_heart_rate}bpm")
+
+        if self.max_heart_rate is not None:
+            parts.append(f"Max HR: {self.max_heart_rate}bpm")
+
+        if self.avg_cadence is not None:
+            parts.append(f"Avg Cadence: {self.avg_cadence}rpm")
+
+        if self.max_cadence is not None:
+            parts.append(f"Max Cadence: {self.max_cadence}rpm")
+
+        if self.avg_power is not None:
+            parts.append(f"Avg Power: {self.avg_power}W")
+
+        if self.max_power is not None:
+            parts.append(f"Max Power: {self.max_power}W")
+
+        if self.total_calories is not None:
+            parts.append(f"Calories: {self.total_calories:.0f}kcal")
+
+        if self.total_ascent is not None:
+            parts.append(f"Ascent: {self.total_ascent:.1f}m")
+
+        if self.total_descent is not None:
+            parts.append(f"Descent: {self.total_descent:.1f}m")
+
+        if self.intensity:
+            parts.append(f"Intensity: {self.intensity}")
+
+        if self.trigger:
+            parts.append(f"Trigger: {self.trigger}")
+
+        return "Lap(\n  " + "\n  ".join(parts) + "\n)"
+
 
 __all__ = ["Lap"]

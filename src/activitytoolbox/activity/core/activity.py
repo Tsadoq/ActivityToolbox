@@ -168,5 +168,94 @@ class SportActivity(BaseModel):
             "max_lon": max(lons),
         }
 
+    def __str__(self) -> str:
+        """Pretty print sport activity information."""
+        lines = ["=" * 60]
+        lines.append("SPORT ACTIVITY")
+        lines.append("=" * 60)
+
+        if self.id:
+            lines.append(f"ID: {self.id}")
+
+        if self.sport_type:
+            sport_str = self.sport_type
+            if self.sport_subtype:
+                sport_str += f" ({self.sport_subtype})"
+            lines.append(f"Sport: {sport_str}")
+
+        if self.source_format:
+            lines.append(f"Source Format: {self.source_format.upper()}")
+
+        lines.append("")
+        lines.append("Time & Duration:")
+        lines.append("-" * 60)
+
+        if self.start_time:
+            lines.append(f"  Start: {self.start_time.strftime('%Y-%m-%d %H:%M:%S')}")
+
+        if self.end_time:
+            lines.append(f"  End: {self.end_time.strftime('%Y-%m-%d %H:%M:%S')}")
+
+        if self.total_duration:
+            total_secs = int(self.total_duration.total_seconds())
+            hours, remainder = divmod(total_secs, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            if hours > 0:
+                lines.append(f"  Duration: {hours}h {minutes}m {seconds}s")
+            elif minutes > 0:
+                lines.append(f"  Duration: {minutes}m {seconds}s")
+            else:
+                lines.append(f"  Duration: {seconds}s")
+
+        lines.append("")
+        lines.append("Summary:")
+        lines.append("-" * 60)
+
+        if self.total_distance is not None:
+            if self.total_distance >= 1000:
+                lines.append(f"  Distance: {self.total_distance / 1000:.2f}km")
+            else:
+                lines.append(f"  Distance: {self.total_distance:.1f}m")
+
+        if self.total_calories is not None:
+            lines.append(f"  Calories: {self.total_calories:.0f}kcal")
+
+        if self.total_ascent is not None:
+            lines.append(f"  Total Ascent: {self.total_ascent:.1f}m")
+
+        if self.total_descent is not None:
+            lines.append(f"  Total Descent: {self.total_descent:.1f}m")
+
+        lines.append(f"  GPS Data: {'Yes' if self.has_gps else 'No'}")
+
+        if self.bounding_box:
+            bbox = self.bounding_box
+            lines.append(
+                f"  Bounding Box: ({bbox['min_lat']:.6f}, {bbox['min_lon']:.6f}) to ({bbox['max_lat']:.6f}, {bbox['max_lon']:.6f})"
+            )
+
+        lines.append("")
+        lines.append("Data Points:")
+        lines.append("-" * 60)
+        lines.append(f"  Track Points: {len(self.track_points)}")
+        lines.append(f"  Laps: {len(self.laps)}")
+
+        if self.device_info:
+            lines.append("")
+            lines.append("Device Information:")
+            lines.append("-" * 60)
+            if self.device_info.device_name:
+                lines.append(f"  Device: {self.device_info.device_name}")
+            if self.device_info.manufacturer:
+                lines.append(f"  Manufacturer: {self.device_info.manufacturer}")
+            if self.device_info.product_id:
+                lines.append(f"  Product ID: {self.device_info.product_id}")
+            if self.device_info.firmware_version:
+                lines.append(f"  Firmware: {self.device_info.firmware_version}")
+
+        lines.append("=" * 60)
+
+        return "\n".join(lines)
+
 
 __all__ = ["SportActivity"]
