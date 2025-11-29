@@ -9,7 +9,6 @@ from pydantic import (
     BaseModel,
     ConfigDict,
     Field,
-    computed_field,
     field_validator,
     model_validator,
 )
@@ -127,7 +126,6 @@ class SportActivity(BaseModel):
 
     # ----------------------------- Computed fields --------------------------------
 
-    @computed_field
     @property
     def end_time(self) -> Optional[datetime]:
         """
@@ -137,7 +135,6 @@ class SportActivity(BaseModel):
             return None
         return self.track_points[-1].timestamp
 
-    @computed_field
     @property
     def total_duration(self) -> Optional[timedelta]:
         """
@@ -147,7 +144,6 @@ class SportActivity(BaseModel):
             return None
         return self.end_time - self.start_time
 
-    @computed_field
     @property
     def has_gps(self) -> bool:
         """
@@ -158,7 +154,6 @@ class SportActivity(BaseModel):
             for tp in self.track_points
         )
 
-    @computed_field
     @property
     def bounding_box(self) -> Optional[Dict[str, float]]:
         """
