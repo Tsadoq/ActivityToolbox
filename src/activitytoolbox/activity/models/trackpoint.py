@@ -23,23 +23,19 @@ class TrackPoint(BaseModel):
     )
 
     timestamp: datetime = Field(
-        alias="time",
         description="Timestamp of this sample in UTC (or source-local if not normalized).",
     )
 
     latitude: Optional[Latitude] = Field(
         default=None,
-        alias="lat",
         description="Latitude in decimal degrees; None for non-GPS samples (e.g. trainer).",
     )
     longitude: Optional[Longitude] = Field(
         default=None,
-        alias="lon",
         description="Longitude in decimal degrees; None for non-GPS samples.",
     )
     elevation: Optional[float] = Field(
         default=None,
-        alias="alt",
         description="Elevation/altitude in meters above sea level, if available.",
     )
 
@@ -57,7 +53,6 @@ class TrackPoint(BaseModel):
 
     heart_rate: Optional[BPM] = Field(
         default=None,
-        alias="heartRate",
         description="Heart rate in beats per minute.",
     )
     cadence: Optional[RPM] = Field(

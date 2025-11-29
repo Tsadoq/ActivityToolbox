@@ -18,7 +18,6 @@ class DeviceInfo(BaseModel):
 
     device_name: Optional[str] = Field(
         default=None,
-        alias="deviceName",
         description="Name of the device or application (e.g. 'Garmin Forerunner 945').",
     )
     manufacturer: Optional[str] = Field(
@@ -27,12 +26,10 @@ class DeviceInfo(BaseModel):
     )
     product_id: Optional[str] = Field(
         default=None,
-        alias="productId",
         description="Product identifier or model number as reported by the source.",
     )
     firmware_version: Optional[str] = Field(
         default=None,
-        alias="firmwareVersion",
         description="Firmware or software version of the recording device/app.",
     )
 

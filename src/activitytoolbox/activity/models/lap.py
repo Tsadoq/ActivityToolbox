@@ -32,7 +32,6 @@ class Lap(BaseModel):
     )
     total_time: Optional[timedelta] = Field(
         default=None,
-        alias="totalTime",
         description="Duration of the lap. If None, can be derived from track points.",
     )
 
@@ -57,12 +56,10 @@ class Lap(BaseModel):
 
     avg_heart_rate: Optional[BPM] = Field(
         default=None,
-        alias="avgHr",
         description="Average heart rate in bpm.",
     )
     max_heart_rate: Optional[BPM] = Field(
         default=None,
-        alias="maxHr",
         description="Maximum heart rate in bpm.",
     )
 

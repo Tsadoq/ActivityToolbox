@@ -47,12 +47,10 @@ class SportActivity(BaseModel):
 
     sport_type: Optional[str] = Field(
         default=None,
-        alias="sportType",
         description="High-level sport type (e.g. 'Running', 'Cycling', 'Hiking').",
     )
     sport_subtype: Optional[str] = Field(
         default=None,
-        alias="sportSubtype",
         description="Optional sub-sport or profile (e.g. 'Trail running', 'Indoor cycling').",
     )
 
@@ -90,7 +88,6 @@ class SportActivity(BaseModel):
 
     track_points: List[TrackPoint] = Field(
         default_factory=list,
-        alias="trackPoints",
         description="Flat time-ordered list of all track points in the activity.",
     )
 
