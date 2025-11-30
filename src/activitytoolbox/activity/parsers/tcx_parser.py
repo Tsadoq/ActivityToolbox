@@ -9,7 +9,7 @@ from .. import SportActivity
 from ..models import DeviceInfo, Lap, TrackPoint
 
 
-def load_tcx(file_path: str) -> Optional[SportActivity]:
+def parse_tcx(file_path: str) -> Optional[SportActivity]:
     """Load an activity from a TCX file."""
     tree = objectify.parse(file_path)
     root = tree.getroot()
